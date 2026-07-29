@@ -1,4 +1,4 @@
-import re, sys, json, glob, os
+import re, sys, json, glob, os, tempfile
 
 MARKETING = ["seamless","seamlessly","robust","powerful","cutting-edge","effortless","effortlessly",
     "world-class","next-generation","revolutionary","blazing","lightning-fast","elegant","delightful",
@@ -18,20 +18,23 @@ MODAL_HEDGE = ["it is important to note","it should be noted","it is worth notin
 BE = r"(?:am|is|are|was|were|be|been|being)"
 PP_IRREG = r"(?:done|made|sent|read|built|kept|held|set|put|run|written|shown|given|taken|found|got|gotten|seen|known|thrown|drawn)"
 
-# Editable banword file: {"banned": {phrase: [alts]}, "marketing": {...}, "phrasal": {...}}.
-# Merges into the hardcoded lists above and provides the alternatives lookup.
+# Default banword file: {"banned": {phrase: [alts]}, "marketing": {...}, "phrasal": {...}}.
+# User entries override its alternatives without changing the packaged file.
 _DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "banned-words.json")
+_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME") or os.path.join(os.path.expanduser("~"), ".config")
+_USER_DATA = os.path.join(_CONFIG_HOME, "slopbliterator", "banned-words.json")
 ALTS = {}  # phrase -> [alternatives]
-try:
-    with open(_DATA) as _fh:
-        _d = json.load(_fh)
-    for _cat, _target in (("banned", BANNED), ("marketing", MARKETING), ("phrasal", PHRASAL)):
-        for _ph, _alts in _d.get(_cat, {}).items():
-            if _ph not in _target:
-                _target.append(_ph)
-            ALTS[_ph] = _alts
-except (OSError, ValueError):
-    pass  # fail open: hardcoded lists still work if the file is missing/broken
+for _source in (_DATA, _USER_DATA):
+    try:
+        with open(_source) as _fh:
+            _d = json.load(_fh)
+        for _cat, _target in (("banned", BANNED), ("marketing", MARKETING), ("phrasal", PHRASAL)):
+            for _ph, _alts in _d.get(_cat, {}).items():
+                if _ph not in _target:
+                    _target.append(_ph)
+                ALTS[_ph] = _alts
+    except (OSError, ValueError):
+        pass  # fail open: hardcoded lists still work if either file is missing/broken
 
 
 def suggest(phrase):
@@ -106,15 +109,19 @@ def lint(text):
     }
 
 def add_entry(category, phrase, alts):
-    """Append a banned phrase + alternatives to banned-words.json."""
+    """Add a banned phrase and its alternatives to the user word list."""
     if category not in ("banned", "marketing", "phrasal"):
         print(f"category must be banned|marketing|phrasal, got {category!r}"); sys.exit(2)
     try:
-        with open(_DATA) as fh: d = json.load(fh)
+        with open(_USER_DATA) as fh: d = json.load(fh)
     except (OSError, ValueError):
         d = {"banned": {}, "marketing": {}, "phrasal": {}}
     d.setdefault(category, {})[phrase.lower()] = [a.lower() for a in alts]
-    with open(_DATA, "w") as fh: json.dump(d, fh, indent=2, ensure_ascii=False); fh.write("\n")
+    os.makedirs(os.path.dirname(_USER_DATA), exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", dir=os.path.dirname(_USER_DATA), delete=False) as fh:
+        json.dump(d, fh, indent=2, ensure_ascii=False); fh.write("\n")
+        pending = fh.name
+    os.replace(pending, _USER_DATA)
     print(f"added [{category}] {phrase!r} -> {alts or '(rephrase)'}")
 
 

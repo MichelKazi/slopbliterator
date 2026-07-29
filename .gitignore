@@ -4,3 +4,7 @@ __pycache__/
 
 # user-local voice choice, not committed
 persona.md
+
+/build/
+/dist/
+/*.egg-info/

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slopbliterator"
+version = "0.1.0"
+description = "Deterministic prose linters based on ASD-STE100"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Michel Kazi"}]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/MichelKazi/slopbliterator"
+
+[project.scripts]
+slop-lint = "slopbliterator.slopbliterator_cli:slop_lint"
+slop-substance = "slopbliterator.slopbliterator_cli:slop_substance"
+
+[tool.setuptools]
+packages = ["slopbliterator"]
+package-dir = {slopbliterator = "."}
+include-package-data = false
+
+[tool.setuptools.package-data]
+slopbliterator = ["ste-lint.py", "substance-lint.py", "banned-words.json"]

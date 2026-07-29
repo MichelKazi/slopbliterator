@@ -1,6 +1,9 @@
 ---
 name: slopbliterator
-description: Rewrite prose (docs, READMEs, PR descriptions, commit bodies, error messages, release notes, comments, never code) into ASD-STE100 Simplified Technical English to remove AI slop. Use when writing or polishing outward text, when asked to make writing not sound like AI, make docs plain, or enforce a clear writing style. Ships a deterministic linter (ste-lint.py) to score the result. Two modes: strict (procedures/errors) and STE-flavored (general prose).
+description: >-
+  Rewrite outward prose into ASD-STE100 Simplified Technical English. Never rewrite code.
+  Use for docs, PRs, commits, errors, release notes, comments, or plain writing requests.
+  Run the deterministic linter before returning text. Supports strict and STE-flavored modes.
 ---
 
 # Slopbliterator (STE writing)
@@ -12,23 +15,34 @@ Applies to prose: docs, READMEs, PR and commit bodies, error messages, release n
 ## The six habits of slop (name it, then kill it)
 
 1. Synonym rotation: same thing called three names (user / customer / client). Pick one name, use it every time.
-2. Hedging stacks: helper verbs pile up and nothing happens. "It is important to note that this may potentially help to improve." Cut to "this improves X."
-3. Frozen verbs (nominalization): "perform an analysis of" for "analyze", "provides assistance" for "helps". Use the verb.
-4. Marketing adjectives: seamless, robust, powerful, cutting-edge, effortless. They claim quality instead of showing it. Delete, or state the fact.
+
+2. Hedging stacks: helper verbs pile up and nothing happens. Cut `It is important to note that this may potentially help to improve.` to `This improves X.`
+
+3. Frozen verbs (nominalization): replace `perform an analysis of` with `analyze`. Replace `provides assistance` with `helps`.
+
+4. Marketing adjectives: `seamless`, `robust`, `powerful`, `cutting-edge`, `effortless`. Delete them, or state the fact.
+
 5. Run-on sentences: four ideas stitched with em dashes and semicolons. Make four sentences.
-6. Chatty phrasal verbs: spin up, reach out, dive into, kick off. Use a plain verb (start, contact, read, begin).
+
+6. Chatty phrasal verbs: `spin up`, `reach out`, `dive into`, `kick off`. Use a plain verb such as `start`, `contact`, or `read`.
 
 ## Rules
 
 WORDS
-- One name for one thing. One meaning per word ("fall" means move down, never "decrease").
-- Short common word: start (not begin/commence/initiate), use (not utilize/leverage), help (not facilitate), make sure (not ensure), before (not prior to), after (not subsequent to), about (not regarding), get (not obtain), show (not demonstrate), also (not additionally/furthermore/moreover).
+- One name for one thing. One meaning per word. For example, `fall` means move down, never `decrease`.
+
+- Use short common words: `start`, `use`, `help`, `make sure`, `before`, `after`, `about`, `get`, `show`, and `also`.
+
+- Do not use: `begin`, `commence`, `initiate`, `utilize`, `leverage`, `facilitate`, `ensure`, `prior to`, `subsequent to`, `regarding`, `obtain`, `demonstrate`, `additionally`, `furthermore`, or `moreover`.
+
 - No marketing adjectives. American spelling.
 
 VERBS
-- Active voice. "the parser reads the file", not "the file is read by the parser".
-- A verb for an action. "analyze the log", not "perform an analysis of the log".
-- No stacked auxiliaries. No "-ing" main verb where a simple tense works.
+- Active voice. Write `the parser reads the file`, not `the file is read by the parser`.
+
+- Use a verb for an action. Write `analyze the log`, not `perform an analysis of the log`.
+
+- No stacked auxiliaries. No `-ing` main verb where a simple tense works.
 
 SENTENCES
 - One idea per sentence. Max 20 words (instruction), max 25 (descriptive).
@@ -36,20 +50,26 @@ SENTENCES
 
 PUNCTUATION
 - No semicolons. Write two sentences.
-- No em dashes (— or –). Use a comma, or split the sentence. (STE bans only the semicolon. The em-dash ban is the house rule from CLAUDE.md.)
+
+- No em dashes. Use a comma, or split the sentence. STE bans only the semicolon. The em-dash ban is a house rule.
 
 BANNED TELLS (house additions)
-- Never: "smoking gun", "load-bearing", "ensures that", "this means", "in order to", "as a result", "going forward", "it's important to note", "delve", "tapestry", "testament to".
-- No sycophantic openers ("Great question", "Absolutely", "Certainly"). No performative helpfulness ("I'd be happy to", "hope this helps"). No conclusion filler ("In conclusion", "To summarize", "The key takeaway").
+- Never: `smoking gun`, `load-bearing`, `ensures that`, `this means`, `in order to`, `as a result`, `going forward`, `it's important to note`, `delve`, `tapestry`, or `testament to`.
+- No sycophantic openers such as `Great question`, `Absolutely`, or `Certainly`.
+- No help offers such as `I'd be happy to` or `hope this helps`.
+- No conclusion filler such as `In conclusion`, `To summarize`, or `The key takeaway`.
 
 CODE SYMBOLS
-- Wrap every code symbol in single backticks, in all outward text INCLUDING commit messages: variable, method, class, field, flag, file path, constant, RPC name. `user.active?`, `set_visibility`, `feature-flag-name`, `app/models/user.rb`.
+- Wrap every code symbol in single backticks.
+- Apply this rule to all outward text, including commit messages.
+- Symbols include variables, methods, classes, fields, flags, paths, constants, and RPC names.
+- Examples: `user.active?`, `set_visibility`, `feature-flag-name`, `app/models/user.rb`.
 - Commit messages ban code FENCES (```) and other markdown (bullets, headers, bold), but single backticks around a symbol are fine and expected.
 
 STRUCTURE
 - One topic per paragraph, max six sentences. For steps: numbered vertical list, one action per item, imperative form. Condition before command.
 - Break the rule of three. Do not default to three bullets or three adjectives. Use two, or four, or one.
-- No "not just X, but also Y." No bold-keyword-colon pattern in lists. Headers are tools, not decoration.
+- No `not just X, but also Y`. No bold-keyword-colon pattern in lists. Headers are tools, not decoration.
 - Take positions. If one option is better, say so. Do not hedge everything equally.
 - Write only the requested text. No preamble, no restating the question, no closing summary.
 
@@ -83,21 +103,21 @@ Every sentence must earn its place as one of these four:
 Two failure modes, opposite directions. Narration says too little (restates the diff). Over-explanation says too much (pads with instructions, warnings, and obvious outcomes). Both read like AI. Cut both.
 
 Cut on sight, narration (too little):
-- Diff narration: "Adds a setX mutation taking a and b", "Plumbs updateX through the store and setX through the manager", "Exposes Y on the read model, regenerates the schema". The reviewer sees the layers by opening the diff. Say WHY it is split that way, or say nothing.
+- Diff narration: `Adds a setX mutation taking a and b`, `Plumbs updateX through the store and setX through the manager`, or `Exposes Y on the read model`. The reviewer sees the layers in the diff. Say why it is split that way, or say nothing.
 - Restating the title or the ticket.
 
 Cut on sight, over-explanation (too much):
-- Instructing the reviewer: "Verify in review that...", "Note that...", "Please check...", "Keep in mind...". State the fact as a plain declarative and trust the reviewer to review. "X is admin-only" not "Verify in review that X is admin-only."
-- Manufactured warnings: a "WATCH OUT" or "this could be a bug" for behavior that is almost certainly intended. Only flag a risk you actually believe is a risk. A default value or a documented behavior is not a warning.
-- A Result section that restates the Modification, or states the obvious ("no client-facing change, live on merge", "the tests pass"). Most PRs do not need a Result section. Write one only when the observable outcome is not obvious from the change. When in doubt, delete it.
-- Hedged over-qualification: "this should", "in most cases", "generally" stacked onto a fact you are sure of.
+- Reviewer instructions: `Verify in review that`, `Note that`, `Please check`, or `Keep in mind`. State `X is admin-only` and trust the reviewer.
+- Manufactured warnings: `WATCH OUT` or `this could be a bug` for intended behavior. Flag only risks that you believe are real.
+- A Result section that repeats the Modification or states `the tests pass`. Most PRs do not need a Result section. Keep it only for a non-obvious outcome.
+- Hedged qualifications: `this should`, `in most cases`, or `generally` on a fact you know.
 
-Litmus for a Modification/Solution section: if you deleted it and made the reviewer read the diff, what would they NOT know? Write exactly that, as plain declaratives. If the answer is "nothing", the section is one line or gone. Do not pad it back up with reviewer instructions or warnings to hit a length.
+Litmus for a Modification or Solution section: what would the reviewer not know from the diff? Write exactly that as plain declaratives. If the answer is `nothing`, use one line or delete the section.
 
 Deterministic check for diff-narration (the mechanizable part of this test):
 
 ```
-git diff origin/main...HEAD | python3 substance-lint.py --body pr.txt
+git diff origin/main...HEAD | slop-substance --body pr.txt
 ```
 
 It flags: (1) diff-symbol overlap: what fraction of the symbols your Modification names also appear in the diff, over 60% is possible narration; (2) Result-restates-Modification word overlap; (3) which of why/trade-off/consequence signals are present.
@@ -110,15 +130,15 @@ This lint is a SIGNAL, not a verdict. False positives are expected. Two common o
 
 The linter proves a description CAN be diff narration. Only you can judge whether it is, given what the change actually is.
 
-Worked example of the failure: "Plumbs a partial-column `updateVisibility` through the store and a `setVisibility` through the manager" is diff narration. The reviewer sees the store and manager layers in the diff. The useful version answers the code-invisible questions: why partial-column (a `None` argument must not overwrite the other flag), and how the two fields are kept off the client schema (the one thing the reviewer must verify and cannot see at a glance).
+Worked failure: `Plumbs a partial-column updateVisibility through the store and a setVisibility through the manager` narrates the diff. The useful version explains why `None` must not overwrite the other flag. It also explains why the client schema hides both fields.
 
 ## Self-lint (deterministic, run before returning text)
 
 The linter scores violations per 100 words. Lower is cleaner. STE target is about 1.1. Baseline AI writing is about 4.4.
 
 ```
-python3 ste-lint.py < draft.txt        # stdin, JSON out
-python3 ste-lint.py file1.md file2.md  # table over files
+slop-lint < draft.txt        # stdin, JSON out
+slop-lint file1.md file2.md  # table over files
 ```
 
 Then fix by hand what it flags:
@@ -126,13 +146,13 @@ Then fix by hand what it flags:
 2. Any semicolon or em dash? Replace with a period or comma.
 3. Any contraction? Expand it.
 4. Any passive voice with a known actor? Make it active.
-5. Any "-ing" main verb, nominalization, or phrasal verb? Plain verb.
+5. Any `-ing` main verb, nominalization, or phrasal verb? Use a plain verb.
 6. Same thing named two ways? Pick one name.
 
-On a banned-word or marketing-word hit, the linter prints suggested alternatives (from `banned-words.json`). Do NOT stop and ask which to use. A one-word swap in a draft is maximally reversible. Take the obvious curated alternative, or a plain synonym if none fit, or rephrase the sentence. Just make the swap and move on. If the choice is genuinely load-bearing (rare for a single word), flag it inline in one line ("used `use` for `leverage`") so the reader can override. Reserve blocking questions for real forks, not word choice.
+On a banned or marketing hit, use the suggested alternative from `banned-words.json`. Do not ask about a reversible word choice. Use a plain synonym or rewrite the sentence when no suggestion fits. Flag a rare key choice in one line so the reader can override it.
 
-Grow the list as you go: when the reader rejects a word or you spot a new slop tell, `python3 ste-lint.py --add <banned|marketing|phrasal> "<phrase>" ["alt" ...]`. Next draft is scored against it with the alternative pre-chosen.
+Grow the list when the reader rejects a word or you find a new tell. Run `slop-lint --add <banned|marketing|phrasal> "<phrase>" ["alt" ...]`.
 
-The linter catches the mechanical form of slop. That is where the quality loss lives and it is fully checkable. It cannot judge whether the content is true or worth saying. STE fixes bad writing, not "nothing to say." Keep it away from anything that needs a voice.
+The linter catches the mechanical form of slop. It cannot judge whether the content is true or useful. STE fixes bad writing, not `nothing to say`. Do not use it for text that needs a distinct voice.
 
 Standard (free, copyrighted, do not paste in full): https://asd-ste100.org

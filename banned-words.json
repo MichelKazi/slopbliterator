@@ -1,5 +1,5 @@
 {
-  "_doc": "Editable banword list read by ste-lint.py. Each entry maps a banned phrase to suggested alternatives. Empty list means: no drop-in word, rephrase the sentence. When the linter flags a hit it prints the alternatives, so the model picks from this curated set instead of hunting a fresh (often slop) synonym. Grow it with: python3 ste-lint.py --add <category> \"<phrase>\" \"alt1\" \"alt2\". Categories: banned, marketing, phrasal.",
+  "_doc": "Read-only defaults for slop-lint. Add user entries with slop-lint --add. The command writes to the user configuration directory.",
   "banned": {
     "begin": [
       "start"
