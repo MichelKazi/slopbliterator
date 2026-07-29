@@ -1,0 +1,1 @@
+The H.264 path omits `max_ref_frames` on purpose. VideoToolbox on Apple Silicon produces all-IDR output when `ReferenceBufferCount` is 1. That inflates bandwidth about 3x and drops frames. HEVC and AV1 do not have this quirk. H.264 also sets `-low_delay` to cut latency.

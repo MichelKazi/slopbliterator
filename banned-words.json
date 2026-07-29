@@ -1,0 +1,369 @@
+{
+  "_doc": "Editable banword list read by ste-lint.py. Each entry maps a banned phrase to suggested alternatives. Empty list means: no drop-in word, rephrase the sentence. When the linter flags a hit it prints the alternatives, so the model picks from this curated set instead of hunting a fresh (often slop) synonym. Grow it with: python3 ste-lint.py --add <category> \"<phrase>\" \"alt1\" \"alt2\". Categories: banned, marketing, phrasal.",
+  "banned": {
+    "begin": [
+      "start"
+    ],
+    "commence": [
+      "start"
+    ],
+    "initiate": [
+      "start"
+    ],
+    "originate": [
+      "start",
+      "come from"
+    ],
+    "utilize": [
+      "use"
+    ],
+    "leverage": [
+      "use"
+    ],
+    "facilitate": [
+      "help",
+      "enable"
+    ],
+    "ensure": [
+      "make sure"
+    ],
+    "prior to": [
+      "before"
+    ],
+    "subsequent to": [
+      "after"
+    ],
+    "obtain": [
+      "get"
+    ],
+    "acquire": [
+      "get"
+    ],
+    "demonstrate": [
+      "show"
+    ],
+    "additionally": [
+      "also"
+    ],
+    "furthermore": [
+      "also"
+    ],
+    "moreover": [
+      "also"
+    ],
+    "comprehensive": [
+      "full",
+      "complete"
+    ],
+    "aforementioned": [
+      "this",
+      "that"
+    ],
+    "henceforth": [
+      "from now on"
+    ],
+    "whilst": [
+      "while"
+    ],
+    "amongst": [
+      "among"
+    ],
+    "numerous": [
+      "many"
+    ],
+    "myriad": [
+      "many"
+    ],
+    "plethora": [
+      "many",
+      "a lot of"
+    ],
+    "in order to": [
+      "to"
+    ],
+    "a variety of": [
+      "several",
+      "many"
+    ],
+    "in the event that": [
+      "if"
+    ],
+    "due to the fact that": [
+      "because"
+    ],
+    "it is important to note": [],
+    "smoking gun": [],
+    "load-bearing": [
+      "key",
+      "critical"
+    ],
+    "load bearing": [
+      "key",
+      "critical"
+    ],
+    "this means": [],
+    "as a result": [
+      "so"
+    ],
+    "going forward": [],
+    "testament to": [
+      "proof of",
+      "shows"
+    ],
+    "delve": [
+      "dig into",
+      "look at"
+    ],
+    "clobber": [
+      "overwrite"
+    ],
+    "clobbers": [
+      "overwrites"
+    ],
+    "clobbering": [
+      "overwriting"
+    ],
+    "boils down to": [
+      "is"
+    ],
+    "the crux": [],
+    "crux of": [],
+    "the key insight": [],
+    "at its core": [],
+    "in essence": [],
+    "essentially": [],
+    "fundamentally": [],
+    "notably": [],
+    "crucially": [],
+    "importantly": [],
+    "that said": [],
+    "to be fair": [],
+    "rest assured": [],
+    "worth noting": [],
+    "keep in mind": [],
+    "it's worth": [],
+    "the tell": [],
+    "the takeaway": [],
+    "ultimately": [],
+    "in summary": [],
+    "in conclusion": [],
+    "consequently": [
+      "so"
+    ],
+    "hence": [
+      "so"
+    ],
+    "thus": [
+      "so"
+    ],
+    "therein": [],
+    "notwithstanding": [],
+    "albeit": [
+      "though"
+    ],
+    "underscore": [
+      "show"
+    ],
+    "underscores": [
+      "shows"
+    ],
+    "bolster": [
+      "strengthen"
+    ],
+    "bolsters": [
+      "strengthens"
+    ],
+    "garner": [
+      "get"
+    ],
+    "garnered": [
+      "got"
+    ],
+    "showcase": [
+      "show"
+    ],
+    "showcases": [
+      "shows"
+    ],
+    "showcasing": [
+      "showing"
+    ],
+    "crucial": [
+      "key"
+    ],
+    "pivotal": [
+      "key"
+    ],
+    "vital": [
+      "key"
+    ],
+    "paramount": [
+      "key"
+    ],
+    "meticulous": [
+      "careful"
+    ],
+    "meticulously": [
+      "carefully"
+    ],
+    "intricate": [
+      "complex"
+    ],
+    "intricacies": [
+      "details"
+    ],
+    "nuanced": [],
+    "holistic": [],
+    "synergy": [],
+    "streamline": [
+      "simplify"
+    ],
+    "streamlines": [
+      "simplifies"
+    ],
+    "endeavor": [
+      "effort"
+    ],
+    "furnish": [
+      "give"
+    ],
+    "realm": [
+      "area"
+    ],
+    "the landscape": [
+      "the field"
+    ],
+    "tapestry": [],
+    "navigating": [
+      "handling"
+    ],
+    "navigate the": [
+      "handle the"
+    ],
+    "sheds light on": [
+      "shows"
+    ],
+    "delving": [
+      "digging into"
+    ],
+    "a myriad of": [
+      "many"
+    ],
+    "seamlessly": [
+      "smoothly"
+    ],
+    "robustly": [],
+    "effortlessly": [
+      "easily"
+    ],
+    "the beauty of": [],
+    "here's the thing": [],
+    "here's the kicker": [],
+    "the punchline": [],
+    "let's unpack": [],
+    "double-edged sword": [],
+    "you're absolutely right": [],
+    "absolutely right": [],
+    "great question": [],
+    "great point": [],
+    "excellent question": [],
+    "that's a great": [],
+    "happy to help": [],
+    "i'd be happy to": [],
+    "sharp question": [],
+    "sharp catch": [],
+    "good catch": []
+  },
+  "marketing": {
+    "seamless": [],
+    "robust": [
+      "solid",
+      "reliable"
+    ],
+    "powerful": [],
+    "cutting-edge": [
+      "modern",
+      "new"
+    ],
+    "effortless": [
+      "easy"
+    ],
+    "world-class": [],
+    "next-generation": [
+      "new"
+    ],
+    "revolutionary": [],
+    "blazing": [
+      "fast"
+    ],
+    "lightning-fast": [
+      "fast"
+    ],
+    "elegant": [],
+    "delightful": [],
+    "turnkey": [],
+    "best-in-class": [],
+    "state-of-the-art": [
+      "modern"
+    ],
+    "game-changing": [],
+    "battle-tested": [
+      "proven"
+    ],
+    "enterprise-grade": [],
+    "supercharge": [
+      "speed up"
+    ],
+    "unlock": [
+      "enable",
+      "open up"
+    ],
+    "unleash": [
+      "enable"
+    ],
+    "empower": [
+      "let",
+      "enable"
+    ]
+  },
+  "phrasal": {
+    "spin up": [
+      "start",
+      "create"
+    ],
+    "spin down": [
+      "stop",
+      "shut down"
+    ],
+    "reach out": [
+      "contact",
+      "ask"
+    ],
+    "dive into": [
+      "read",
+      "study"
+    ],
+    "kick off": [
+      "start"
+    ],
+    "roll out": [
+      "ship",
+      "release"
+    ],
+    "tear down": [
+      "remove",
+      "delete"
+    ],
+    "ramp up": [
+      "increase"
+    ],
+    "circle back": [
+      "revisit",
+      "follow up"
+    ],
+    "drill down": [
+      "look closer",
+      "break down"
+    ]
+  }
+}
