@@ -1,0 +1,34 @@
+{"id":"ste-long-run-on","linter":"ste","detector":"long_sentence(>20w)","text":"The service reads the request, checks the account, loads the settings, updates the record, sends the event, and returns the response."}
+{"id":"ste-semicolon-join","linter":"ste","detector":"semicolon","text":"The cache missed; the service queried the database."}
+{"id":"ste-contraction-it-is","linter":"ste","detector":"contraction","text":"It's important to validate the input."}
+{"id":"ste-contraction-we-have","linter":"ste","detector":"contraction","text":"We've tested the rollback path."}
+{"id":"ste-passive-regular","linter":"ste","detector":"passive_voice","text":"The worker was stopped by the supervisor."}
+{"id":"ste-passive-irregular","linter":"ste","detector":"passive_voice","text":"The file was written by the exporter."}
+{"id":"ste-passive-used-by","linter":"ste","detector":"passive_voice","text":"The cache is used by the worker."}
+{"id":"ste-ing-main","linter":"ste","detector":"ing_main_verb","text":"The worker is processing the queue."}
+{"id":"ste-nominal-perform","linter":"ste","detector":"nominalization","text":"The team performs an analysis of the logs."}
+{"id":"ste-nominal-provide","linter":"ste","detector":"nominalization","text":"The command provides assistance to new users."}
+{"id":"ste-phrasal-spin-up","linter":"ste","detector":"phrasal_verb","text":"Spin up another worker."}
+{"id":"ste-phrasal-circle-back","linter":"ste","detector":"phrasal_verb","text":"We will circle back after lunch."}
+{"id":"ste-banned-leverage","linter":"ste","detector":"banned_word","source_text":"demo/before.md","text":"It's important to note that our H.264 encoding path leverages a rather nuanced, load-bearing workaround that is absolutely critical to ensuring optimal streaming performance."}
+{"id":"ste-banned-conclusion","linter":"ste","detector":"banned_word","text":"In conclusion, the migration worked."}
+{"id":"ste-marketing-seamless","linter":"ste","detector":"marketing_adjective","text":"The service provides a seamless migration."}
+{"id":"ste-marketing-powerful","linter":"ste","detector":"marketing_adjective","text":"This powerful tool transforms every workflow."}
+{"id":"ste-modal-note","linter":"ste","detector":"modal_hedge","text":"It should be noted that the cache is optional."}
+{"id":"ste-long-paragraph","linter":"ste","detector":"long_paragraph(>6s)","text":"Read the file. Parse each line. Check each key. Store each value. Close the file. Print the count. Exit the process."}
+{"id":"ste-em-dash-aside","linter":"ste","detector":"em_dash(slop-marker)","text":"The cache failed—again—during startup."}
+{"id":"ste-not-just-but-also","linter":"ste","detector":"not_just_but","text":"This is not just a cache, but also a coordination layer."}
+{"id":"ste-not-only-but","linter":"ste","detector":"not_just_but","text":"The change not only reduces latency but removes a failure mode."}
+{"id":"ste-not-merely-but","linter":"ste","detector":"not_just_but","text":"The cache is not merely an optimization but also a contract."}
+{"id":"ste-not-simply-but","linter":"ste","detector":"not_just_but","text":"The migration is not simply a rewrite but a new operating model."}
+{"id":"ste-not-about","linter":"ste","detector":"not_just_but","text":"It's not about speed, it's about trust."}
+{"id":"ste-isnt-just","linter":"ste","detector":"not_just_but","text":"Caching isn't just an optimization, it's a contract."}
+{"id":"ste-marketing-triad-basic","linter":"ste","detector":"marketing_triad(advisory)","text":"The platform is seamless, robust, and powerful."}
+{"id":"ste-marketing-triad-hyphenated","linter":"ste","detector":"marketing_triad(advisory)","text":"The product is cutting-edge, effortless, and reliable."}
+{"id":"substance-narration","linter":"substance","detector":"diff_narration","text":"Modification:\nPlumbs updateVisibility through the store and calls setVisibility in the manager.","diff":"+ def updateVisibility(value):\n+ def setVisibility(value):"}
+{"id":"substance-result-repeat","linter":"substance","detector":"result_restatement","text":"Modification:\nRejects invalid tokens before database access.\n\nResult:\nInvalid tokens are rejected before database access.","diff":""}
+{"id":"substance-missing-categories","linter":"substance","detector":"missing_substance","text":"Modification:\nAdds the new endpoint.","diff":""}
+{"id":"substance-overexplain","linter":"substance","detector":"overexplanation","text":"Modification:\nPlease verify in review that the admin check runs first.","diff":""}
+{"id":"substance-bare-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls updateVisibility after validation.","diff":""}
+{"id":"substance-bare-constant","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nRaises MAX_RETRIES after validation.","diff":""}
+{"id":"substance-bare-prefixed-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls GraphQLClient after validation.","diff":""}

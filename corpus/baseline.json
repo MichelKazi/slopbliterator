@@ -1,0 +1,21 @@
+{
+  "ste:banned_word": {"precision": 1.0, "recall": 1.0},
+  "ste:contraction": {"precision": 0.5, "recall": 1.0},
+  "ste:em_dash(slop-marker)": {"precision": 0.5, "recall": 1.0},
+  "ste:ing_main_verb": {"precision": 0.25, "recall": 1.0},
+  "ste:long_paragraph(>6s)": {"precision": 1.0, "recall": 1.0},
+  "ste:long_sentence(>20w)": {"precision": 1.0, "recall": 1.0},
+  "ste:marketing_adjective": {"precision": 1.0, "recall": 1.0},
+  "ste:marketing_triad(advisory)": {"precision": null, "recall": 0.0},
+  "ste:modal_hedge": {"precision": 1.0, "recall": 1.0},
+  "ste:nominalization": {"precision": 0.4, "recall": 1.0},
+  "ste:not_just_but": {"precision": null, "recall": 0.0},
+  "ste:passive_voice": {"precision": 0.375, "recall": 1.0},
+  "ste:phrasal_verb": {"precision": 1.0, "recall": 1.0},
+  "ste:semicolon": {"precision": 1.0, "recall": 1.0},
+  "substance:diff_narration": {"precision": 1.0, "recall": 1.0},
+  "substance:missing_substance": {"precision": 1.0, "recall": 1.0},
+  "substance:overexplanation": {"precision": 1.0, "recall": 1.0},
+  "substance:result_restatement": {"precision": 1.0, "recall": 1.0},
+  "substance:unbackticked_symbol": {"precision": 0.75, "recall": 1.0}
+}

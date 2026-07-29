@@ -18,6 +18,7 @@ import re, sys, argparse
 # identify code. Plain English words are excluded by requiring an internal
 # capital, underscore, or dot (i.e. it looks like a symbol, not a word).
 SYMBOL = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*(?:[A-Z_.][A-Za-z0-9_.]*)+\b")
+ACRONYMS = {"GraphQL"}
 
 # Over-explanation: instructing the reviewer, manufactured warnings, padding.
 OVEREXPLAIN = [
@@ -54,7 +55,10 @@ def unbackticked_symbols(text):
     masked = re.sub(r"`[^`]*`", " ", masked)
     # Drop markdown links and bare URLs (paths in URLs are not code refs).
     masked = re.sub(r"https?://\S+", " ", masked)
-    found = [m.group(0) for m in SYMBOL.finditer(masked)]
+    found = [
+        m.group(0) for m in SYMBOL.finditer(masked)
+        if not ((m.group(0).isalpha() and m.group(0).isupper()) or m.group(0) in ACRONYMS)
+    ]
     # Ignore sentence-start dotted things and version-y tokens are still symbols;
     # keep it simple, report uniques.
     return list(dict.fromkeys(found))
@@ -130,7 +134,7 @@ def main():
         if bare:
             print(f"5. unbackticked code symbols ({len(bare)}): {', '.join(bare[:12])}{' ...' if len(bare) > 12 else ''}")
             print("   -> Wrap code symbols in backticks (all outward text, commits included).")
-            print("      May include false positives (acronyms like API, GraphQL) — judge them.")
+            print("      Judge ambiguous names against the code before changing prose.")
         else:
             print("4. unbackticked code symbols: none")
 

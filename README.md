@@ -1,10 +1,10 @@
 # Slopbliterator
 
-A slop obliterator for LLMs. Check machine-written prose before you hand it to an organic brain powered meat machine. Respect the meat machine's time.
+A slop obliterator for LLMs. Review your machine-generated writing (PRs, commits, docs, error messages) with a deterministic linter BEFORE you hand it to an organic brain powered [meat machine](https://en.wikipedia.org/wiki/Homo_sapiens). Respect the [meat machine](https://en.wikipedia.org/wiki/Homo_sapiens)'s time.
 
-Slop is a form problem and a vocabulary problem. A word blacklist cannot fix it alone. Slopbliterator uses [ASD-STE100 Simplified Technical English](https://asd-ste100.org) to make technical prose harder to misread.
+Slop is as much a **form** problem as it is a vocabulary one. Banning one claudism at a time is a losing game of whack-a-mole. Aircraft manuals from 1986 can teach us and LLMs how to write technical documentation that is harder to misread, which is why Slopbliterator follows [ASD-STE100 Simplified Technical English](https://asd-ste100.org).
 
-I am also tired of reading `load-bearing` and `smoking gun` everywhere.
+I'm also just f***ing tired of reading "load-bearing" and "smoking gun" everywhere.
 
 <img width="650" height="362" alt="perfect-blue-sky-background--with-fluffy-clouds(1)" src="https://github.com/user-attachments/assets/8cdf8c7f-a401-4700-aba2-72e09c196379" />
 

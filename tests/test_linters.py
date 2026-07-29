@@ -12,6 +12,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 FORM_LINTER = ROOT / "ste-lint.py"
 WORD_LIST = ROOT / "banned-words.json"
+CORPUS_SCORER = ROOT / "corpus" / "score.py"
 
 
 def run_form_linter(script, *args, input_text=None, env=None):
@@ -97,6 +98,32 @@ class FormLinterTests(unittest.TestCase):
             result = json.loads(run_form_linter(FORM_LINTER, input_text="Ensure it works.", env=env))
 
             self.assertIn("ensure -> confirm", result["suggestions"])
+
+    def test_labeled_corpus_has_no_false_results(self):
+        """Keep every labeled detector case on its expected side."""
+        results = json.loads(run_form_linter(CORPUS_SCORER, "--json"))
+        failures = {
+            detector: {"false_positives": row["false_positives"], "false_negatives": row["false_negatives"]}
+            for detector, row in results.items()
+            if row["false_positives"] or row["false_negatives"]
+        }
+        self.assertEqual(failures, {})
+
+    def test_marketing_triad_is_advisory_only(self):
+        """Keep marketing triads outside the scored total."""
+        triad = json.loads(run_form_linter(FORM_LINTER, input_text="The tool is seamless, robust, and powerful."))
+        plain = json.loads(run_form_linter(FORM_LINTER, input_text="The tool is seamless and robust and powerful."))
+
+        self.assertEqual(triad["total"], plain["total"])
+        self.assertEqual(triad["advisories"]["marketing_triad(advisory)"], 1)
+        self.assertEqual(triad["advisories"]["messages"], ["possible marketing triad, judge it"])
+
+    def test_not_just_scaffold_is_scored(self):
+        """Include rhetorical contrast scaffolds in the scored total."""
+        result = json.loads(run_form_linter(FORM_LINTER, input_text="This is not simply a cache but a coordination layer."))
+
+        self.assertEqual(result["violations"]["not_just_but"], 1)
+        self.assertEqual(result["total"], 1)
 
 
 if __name__ == "__main__":

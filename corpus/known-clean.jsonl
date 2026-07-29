@@ -1,0 +1,33 @@
+{"id":"ste-long-exactly-twenty","linter":"ste","detector":"long_sentence(>20w)","text":"The parser reads each request and returns an error when the account identifier does not match the current authenticated user."}
+{"id":"ste-colon-not-semicolon","linter":"ste","detector":"semicolon","text":"The response has two fields: status and count."}
+{"id":"ste-possessive-user","linter":"ste","detector":"contraction","text":"The user's config loads at startup."}
+{"id":"ste-possessive-service","linter":"ste","detector":"contraction","text":"The service's cache expires after one hour."}
+{"id":"ste-predicate-interested","linter":"ste","detector":"passive_voice","text":"The user is interested in weekly reports."}
+{"id":"ste-predicate-excited","linter":"ste","detector":"passive_voice","text":"The team was excited about the release."}
+{"id":"ste-predicate-based","linter":"ste","detector":"passive_voice","text":"The limit is based on account age."}
+{"id":"ste-predicate-used","linter":"ste","detector":"passive_voice","text":"The room is used for storage."}
+{"id":"ste-predicate-closed","linter":"ste","detector":"passive_voice","text":"The issue is closed."}
+{"id":"ste-ing-interesting","linter":"ste","detector":"ing_main_verb","text":"The result is interesting."}
+{"id":"ste-ing-promising","linter":"ste","detector":"ing_main_verb","text":"The first measurement is promising."}
+{"id":"ste-ing-missing","linter":"ste","detector":"ing_main_verb","text":"The file is missing."}
+{"id":"ste-noun-portion","linter":"ste","detector":"nominalization","text":"A portion of the file remains encrypted."}
+{"id":"ste-noun-moment","linter":"ste","detector":"nominalization","text":"The moment of failure appears in the log."}
+{"id":"ste-noun-instance","linter":"ste","detector":"nominalization","text":"Each instance of the service has one cache."}
+{"id":"ste-noun-maintenance","linter":"ste","detector":"nominalization","text":"Maintenance of the pump takes one hour."}
+{"id":"ste-noun-performance","linter":"ste","detector":"nominalization","text":"The performance of the query changed after indexing."}
+{"id":"ste-phrasal-plain","linter":"ste","detector":"phrasal_verb","text":"The drill points down during calibration."}
+{"id":"ste-banned-boundary","linter":"ste","detector":"banned_word","text":"The acquisition started in June."}
+{"id":"ste-marketing-plain","linter":"ste","detector":"marketing_adjective","text":"The backup completed in twelve seconds."}
+{"id":"ste-modal-plain","linter":"ste","detector":"modal_hedge","text":"The release notes list the old limit."}
+{"id":"ste-six-sentence-paragraph","linter":"ste","detector":"long_paragraph(>6s)","text":"Open the file. Read the header. Parse the rows. Check the checksum. Close the file. Print the count."}
+{"id":"ste-en-dash-range","linter":"ste","detector":"em_dash(slop-marker)","text":"Python 3.8–3.12 is supported."}
+{"id":"ste-literal-negation","linter":"ste","detector":"not_just_but","text":"The process did not just stop, but deleted its lock file."}
+{"id":"ste-not-just-no-but","linter":"ste","detector":"not_just_but","text":"The service is not just slow."}
+{"id":"ste-plain-triad","linter":"ste","detector":"marketing_triad(advisory)","text":"Install Git, Python, and SQLite."}
+{"id":"ste-single-marketing-triad","linter":"ste","detector":"marketing_triad(advisory)","text":"The client is robust, small, and fast."}
+{"id":"substance-public-api","linter":"substance","detector":"diff_narration","text":"Modification:\nThe public API adds getUser for client integrations.\n\nBackground:\nClients could not fetch one user.","diff":"+ def getUser(user_id):"}
+{"id":"substance-distinct-result","linter":"substance","detector":"result_restatement","text":"Modification:\nReads tokens before database access.\n\nResult:\nInvalid requests now return 401.","diff":""}
+{"id":"substance-all-categories","linter":"substance","detector":"missing_substance","text":"Background:\nRequests failed because the old parser rejected empty values.\n\nModification:\nWe chose validation rather than coercion.\n\nResult:\nWe tested the 400 response.","diff":""}
+{"id":"substance-direct-fact","linter":"substance","detector":"overexplanation","text":"Modification:\nThe endpoint is admin-only.","diff":""}
+{"id":"substance-acronyms","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nThe API accepts JSON and exposes a GraphQL endpoint.","diff":""}
+{"id":"substance-backticked-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls `updateVisibility` after validation.","diff":""}

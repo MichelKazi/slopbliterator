@@ -17,6 +17,25 @@ MODAL_HEDGE = ["it is important to note","it should be noted","it is worth notin
     "as mentioned","as noted above"]
 BE = r"(?:am|is|are|was|were|be|been|being)"
 PP_IRREG = r"(?:done|made|sent|read|built|kept|held|set|put|run|written|shown|given|taken|found|got|gotten|seen|known|thrown|drawn)"
+CONTRACTION = re.compile(
+    r"\b(?:\w+['’](?:t|re|ve|ll|d|m)|(?:it|that|what|there|here|who|he|she|let)['’]s)\b",
+    re.I,
+)
+PASSIVE = re.compile(rf"\b{BE}\s+(?P<participle>\w+ed|{PP_IRREG})\b", re.I)
+ADJECTIVAL_PARTICIPLES = {"based", "closed", "excited", "interested", "used"}
+ING_ADJECTIVES = {"interesting", "missing", "promising"}
+NOT_JUST = re.compile(
+    r"\b(?:(?<!did )(?<!does )(?<!do )not\s+(?:just|only|merely|simply)\b[^.!?\n]{1,120}?\bbut(?:\s+also)?\b"
+    r"|it(?:['’]s| is)\s+not\s+about\b[^.!?\n]{1,120}?,\s*it(?:['’]s| is)\s+about\b"
+    r"|isn['’]t\s+just\b[^.!?\n]{1,120}?,\s*it(?:['’]s| is)\b)",
+    re.I,
+)
+TRIAD = re.compile(
+    r"\b(?P<a>[A-Za-z][A-Za-z-]*(?:\s+[A-Za-z][A-Za-z-]*){0,3}),\s*"
+    r"(?P<b>[A-Za-z][A-Za-z-]*(?:\s+[A-Za-z][A-Za-z-]*){0,3}),\s*"
+    r"and\s+(?P<c>[A-Za-z][A-Za-z-]*(?:\s+[A-Za-z][A-Za-z-]*){0,3})\b",
+    re.I,
+)
 
 # Default banword file: {"banned": {phrase: [alts]}, "marketing": {...}, "phrasal": {...}}.
 # User entries override its alternatives without changing the packaged file.
@@ -75,6 +94,29 @@ def count_ci(text, phrases):
             n += 1; hits.append(ph)
     return n, hits
 
+def count_passives(text):
+    """Count likely passive constructions, excluding common predicate adjectives."""
+    count = 0
+    for match in PASSIVE.finditer(text):
+        participle = match.group("participle").lower()
+        if participle not in ADJECTIVAL_PARTICIPLES or (participle == "used" and re.match(r"\s+by\b", text[match.end():], re.I)):
+            count += 1
+    return count
+
+def count_ing_main_verbs(text):
+    """Count BE plus gerund forms, excluding common predicate adjectives."""
+    matches = re.finditer(rf"\b{BE}\s+(?P<gerund>\w+ing)\b", text, re.I)
+    return sum(1 for match in matches if match.group("gerund").lower() not in ING_ADJECTIVES)
+
+def count_marketing_triads(text):
+    """Count short triads where at least two items contain marketing terms."""
+    count = 0
+    for match in TRIAD.finditer(text):
+        items = (match.group("a"), match.group("b"), match.group("c"))
+        if sum(count_ci(item, MARKETING)[0] > 0 for item in items) >= 2:
+            count += 1
+    return count
+
 def lint(text):
     raw = text
     text = strip_code(text)
@@ -84,17 +126,23 @@ def lint(text):
     longs = [(wc(s), s) for s in sents if wc(s) > 20]
     v["long_sentence(>20w)"] = len(longs)
     v["semicolon"] = text.count(";")
-    v["contraction"] = len(re.findall(r"\b\w+['’](?:t|re|ve|ll|d|s|m)\b", text))
-    v["passive_voice"] = len(re.findall(rf"\b{BE}\s+(?:\w+ed|{PP_IRREG})\b", text, re.I))
-    v["ing_main_verb"] = len(re.findall(rf"\b{BE}\s+\w+ing\b", text, re.I))
-    v["nominalization"] = len(re.findall(r"\b(?:perform(?:s|ed)?|conduct(?:s|ed)?|provide(?:s|d)?|carry out|carries out|make use of|makes use of)\b", text, re.I)) + len(re.findall(r"\b\w{4,}(?:tion|ment|ance|ence)\s+of\b", text, re.I))
+    v["contraction"] = len(CONTRACTION.findall(text))
+    v["passive_voice"] = count_passives(text)
+    v["ing_main_verb"] = count_ing_main_verbs(text)
+    v["nominalization"] = len(re.findall(r"\b(?:perform(?:s|ed)?|conduct(?:s|ed)?|provide(?:s|d)?|carry out|carries out|make use of|makes use of)\b", text, re.I))
     v["phrasal_verb"], _ = count_ci(text, PHRASAL)
     v["banned_word"], bh = count_ci(text, BANNED)
     v["marketing_adjective"], mh = count_ci(text, MARKETING)
     v["modal_hedge"], _ = count_ci(text, MODAL_HEDGE)
+    v["not_just_but"] = len(NOT_JUST.findall(text))
     paras = [p for p in re.split(r"\n\s*\n", raw) if p.strip()]
     v["long_paragraph(>6s)"] = sum(1 for p in paras if len(sentences(strip_code(p))) > 6)
-    em = raw.count("—") + raw.count("–")
+    em = raw.count("—")
+    triads = count_marketing_triads(text)
+    advisories = {
+        "marketing_triad(advisory)": triads,
+        "messages": (["possible marketing triad, judge it"] if triads else []),
+    }
     total = sum(v.values())
     per100 = {k: round(x*100.0/words, 2) for k, x in v.items()}
     return {
@@ -102,6 +150,7 @@ def lint(text):
         "violations": v, "total": total,
         "total_per100w": round(total*100.0/words, 2),
         "em_dash(slop-marker)": em,
+        "advisories": advisories,
         "longest_sentence_words": (max(longs)[0] if longs else max((wc(s) for s in sents), default=0)),
         "sample_marketing": list(dict.fromkeys(mh))[:6],
         "sample_banned": list(dict.fromkeys(bh))[:6],
