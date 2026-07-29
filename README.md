@@ -35,10 +35,10 @@ These technical facts describe an H.264 encoder quirk. The first version scores 
 
 ### Install and use
 
-Install the PATH commands and the rules for your coding harness. See [INSTALL.md](INSTALL.md) for Claude Code, Codex, Gemini CLI, Cursor, Windsurf, and Copilot.
+The installer detects Claude Code, Codex, Gemini CLI, Cursor, Windsurf, and Copilot. It installs the PATH commands and the matching writing skill. See [INSTALL.md](INSTALL.md) for options and manual setup.
 
 ```bash
-pipx install git+https://github.com/MichelKazi/slopbliterator.git
+curl -fsSL https://raw.githubusercontent.com/MichelKazi/slopbliterator/main/install.sh | sh
 slop-lint < draft.txt
 slop-lint pr.md notes.md
 git diff origin/main...HEAD | slop-substance --body pr.txt --markdown

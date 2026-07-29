@@ -1,0 +1,16 @@
+{
+  "name": "slopbliterator",
+  "version": "0.1.0",
+  "description": "Install Slopbliterator for AI coding harnesses",
+  "license": "MIT",
+  "repository": "github:MichelKazi/slopbliterator",
+  "bin": {
+    "slopbliterator": "bin/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test tests/installer.test.js"
+  }
+}
