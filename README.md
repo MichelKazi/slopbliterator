@@ -5,8 +5,9 @@ A slop obliterator for LLMs. Review your machine-generated writing (PRs, commits
 Slop is as much a **form** problem as it is a vocabulary one. Banning one claudism at a time is a losing game of whack-a-mole. Aircraft manuals from 1986 can teach us and LLMs how to write technical documentation that is harder to misread, which is why Slopbliterator follows [ASD-STE100 Simplified Technical English](https://asd-ste100.org).
 
 I'm also just f***ing tired of reading "load-bearing" and "smoking gun" everywhere.
+<img width="970" height="540" alt="perfect-blue-sky-background--with-fluffy-clouds(1)" src="https://github.com/user-attachments/assets/8cdf8c7f-a401-4700-aba2-72e09c196379" />
 
-### Demo
+### Real Examples from a Real AI Slop Machine
 
 Real technical facts (an H.264 encoder quirk), written the way an LLM would write them up. Every claim is true. **18.39** violations per 100 words, down to **0.00**.
 
