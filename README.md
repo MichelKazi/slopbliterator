@@ -34,7 +34,7 @@ Real technical facts (an H.264 encoder quirk), written the way an LLM would writ
 ### Install and use
 
 ```bash
-cp -r slopbliterator ~/.claude/skills/slopbliterator
+git clone https://github.com/MichelKazi/slopbliterator.git ~/.claude/skills/slopbliterator
 ```
 
 ```bash
