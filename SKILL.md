@@ -8,7 +8,7 @@ description: >-
 
 # Slopbliterator (STE writing)
 
-Slop is not a vocabulary problem you fix by banning one word at a time. It is a FORM problem: ambiguity with good posture. The fix is a writing system the model can check itself against, not a blacklist. This skill uses ASD-STE100 Simplified Technical English, a controlled-language standard built in 1986 so aircraft mechanics never misread a manual. Tested across models it cuts slop about 74 percent, versus about 3 percent for a banned-word list.
+Slop is not a vocabulary problem you fix by banning one word at a time. It is a form problem: ambiguity with good posture. The fix is a writing system the model can check against, not a blacklist. This skill applies ASD-STE100 principles to technical prose and adds checks for code-review substance.
 
 Applies to prose: docs, READMEs, PR and commit bodies, error messages, release notes, comments, agent output. NOT code, identifiers, or command syntax. NOT marketing copy or anything that needs a voice. STE strips voice on purpose.
 
@@ -75,12 +75,34 @@ STRUCTURE
 
 ## Modes
 
-- strict: procedures, runbooks, safety text, error messages. Apply every rule and both length caps.
-- STE-flavored: general prose (READMEs, PR and commit bodies, docs). Keep the sentence, paragraph, active-voice, and no-phrasal-verb discipline. Relax the dictionary lockdown so the text keeps enough range to read naturally. Default to this for most work.
+- procedure: steps, runbooks, safety text, and instructions. Use commands and a 20-word sentence limit.
+- descriptive: explanations and technical reference text. Use a 25-word sentence limit and no more than six sentences per paragraph.
+- STE-flavored: READMEs, PR and commit bodies, comments, and general prose. Keep the existing 20-word house limit. Relax the controlled vocabulary when normal software terms need it. This is the default.
+
+Choose the mode from the document's purpose. Do not infer full STE conformance from a clean score.
+
+## Issue 9 coverage protocol
+
+The coverage model includes all 53 numbered Issue 9 rules. Run `slop-lint --coverage` to read the current classification and short paraphrases. The model uses three automation levels:
+
+- `enforced`: a deterministic detector contributes to the score.
+- `advisory`: a conservative detector reports a possible problem outside the score.
+- `manual`: inspect the text because a stdlib-only checker cannot decide the rule reliably.
+
+For strict STE work:
+
+1. Select `procedure` or `descriptive` before you draft.
+2. Run `slop-lint --mode <mode>` and fix each scored violation.
+3. Judge each advisory against the sentence and its technical context.
+4. Read the applicable manual rules from `slop-lint --coverage` and inspect the draft.
+5. Check technical nouns and verbs against the user's approved company or project glossary.
+6. State which checks ran. Never call the result certified or fully compliant.
+
+The official controlled dictionary is not bundled. Do not treat an unknown software term as an error without an applicable glossary. Do not reproduce the official standard, dictionary, definitions, or examples.
 
 Note: STE is for technical and outward text. Casual conversation can relax the no-contraction and length caps. The six habits, marketing adjectives, banned tells, and em-dash ban still apply everywhere.
 
-Order of operations: draft in STE-flavored, run the substance test below, then run the linter and fix what it flags. The linter guards form. The substance test guards whether the text is worth reading. Both, every time, for outward text.
+Order of operations: choose a mode, draft, run the substance test below, then run the form linter. Fix each scored flag and judge each advisory. The form linter checks mechanical form. The substance test checks whether the text is worth reading.
 
 ## Persona layer (optional voice, off by default)
 
@@ -134,11 +156,14 @@ Worked failure: `Plumbs a partial-column updateVisibility through the store and 
 
 ## Self-lint (deterministic, run before returning text)
 
-The linter scores violations per 100 words. Lower is cleaner. STE target is about 1.1. Baseline AI writing is about 4.4.
+The linter scores violations per 100 words. Lower is cleaner. Compare scores only when the mode and detector version are the same.
 
 ```
 slop-lint < draft.txt        # stdin, JSON out
 slop-lint file1.md file2.md  # table over files
+slop-lint --mode procedure < steps.txt
+slop-lint --mode descriptive < reference.txt
+slop-lint --coverage         # Issue 9 coverage model
 ```
 
 Then fix by hand what it flags:

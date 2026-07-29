@@ -32,3 +32,18 @@
 {"id":"substance-bare-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls updateVisibility after validation.","diff":""}
 {"id":"substance-bare-constant","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nRaises MAX_RETRIES after validation.","diff":""}
 {"id":"substance-bare-prefixed-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls GraphQLClient after validation.","diff":""}
+{"id":"ste-british-colour","linter":"ste","detector":"american_spelling(advisory)","text":"Set the display colour to blue."}
+{"id":"ste-complex-present-perfect","linter":"ste","detector":"complex_verb(advisory)","text":"The service has processed the queue."}
+{"id":"ste-procedure-statement-step","linter":"ste","detector":"non_imperative_step(advisory)","mode":"procedure","text":"1. You should install the package."}
+{"id":"ste-procedure-note-command","linter":"ste","detector":"instruction_in_note(advisory)","mode":"procedure","text":"NOTE: Remove the cover before the test."}
+{"id":"ste-description-over-25","linter":"ste","detector":"long_sentence(>25w)","mode":"descriptive","text":"The service reads the account record and checks the stored status before it sends the response to every connected client in the current region without delay."}
+{"id":"ste-banned-regarding","linter":"ste","detector":"banned_word","text":"Regarding the failed request, the log contains the cause."}
+{"id":"ste-banned-praise-opener","linter":"ste","detector":"banned_word","text":"Absolutely, the parser should reject that input."}
+{"id":"ste-banned-help-close","linter":"ste","detector":"banned_word","text":"Hope this helps."}
+{"id":"ste-british-organised","linter":"ste","detector":"american_spelling(advisory)","text":"The team organised the test records."}
+{"id":"ste-complex-future-progressive","linter":"ste","detector":"complex_verb(advisory)","text":"The worker will be processing the queue."}
+{"id":"ste-procedure-subject-step","linter":"ste","detector":"non_imperative_step(advisory)","mode":"procedure","text":"2. The operator installs the package."}
+{"id":"ste-procedure-note-check","linter":"ste","detector":"instruction_in_note(advisory)","mode":"procedure","text":"NOTE: Check the pressure before the test."}
+{"id":"ste-banned-certainly","linter":"ste","detector":"banned_word","text":"Certainly, the cache is ready."}
+{"id":"ste-banned-summary-close","linter":"ste","detector":"banned_word","text":"To summarize, the request failed validation."}
+{"id":"ste-banned-takeaway","linter":"ste","detector":"banned_word","text":"The key takeaway is that the old limit remains."}

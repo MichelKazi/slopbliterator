@@ -24,4 +24,4 @@ package-dir = {slopbliterator = "."}
 include-package-data = false
 
 [tool.setuptools.package-data]
-slopbliterator = ["ste-lint.py", "substance-lint.py", "banned-words.json"]
+slopbliterator = ["ste-lint.py", "substance-lint.py", "banned-words.json", "ste-rules.json"]

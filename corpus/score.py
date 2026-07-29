@@ -40,11 +40,11 @@ def load_form_linter(config_home):
 
 def form_result(module, case):
     """Return whether one form detector fired for a case."""
-    result = module.lint(case["text"])
+    result = module.lint(case["text"], case.get("mode", "flavored"))
     detector = case["detector"]
     if detector == "em_dash(slop-marker)":
         return result[detector] > 0
-    if detector == "marketing_triad(advisory)":
+    if detector.endswith("(advisory)"):
         return result.get("advisories", {}).get(detector, 0) > 0
     return result.get("violations", {}).get(detector, 0) > 0
 
@@ -112,6 +112,8 @@ def print_report(results, baseline=None):
             pd = None if row["precision"] is None or old["precision"] is None else row["precision"] - old["precision"]
             rd = None if row["recall"] is None or old["recall"] is None else row["recall"] - old["recall"]
             delta = f'{"n/a" if pd is None else f"{pd:+.2f}"}/{"n/a" if rd is None else f"{rd:+.2f}"}'
+        elif baseline:
+            delta = "new/new"
         print(f'{detector:45} {precision:>9} {recall:>7}   {row["tp"]:2d} {row["fp"]:2d} {row["fn"]:2d} {row["tn"]:2d}   {delta}')
         if row["false_positives"]:
             print(f'  false positives: {", ".join(row["false_positives"])}')

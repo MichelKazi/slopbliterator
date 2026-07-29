@@ -1,6 +1,14 @@
 {
   "_doc": "Read-only defaults for slop-lint. Add user entries with slop-lint --add. The command writes to the user configuration directory.",
   "banned": {
+    "regarding": [
+      "about"
+    ],
+    "certainly": [],
+    "absolutely": [],
+    "hope this helps": [],
+    "to summarize": [],
+    "the key takeaway": [],
     "begin": [
       "start"
     ],

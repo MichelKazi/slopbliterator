@@ -8,9 +8,19 @@ I'm also just f***ing tired of reading "load-bearing" and "smoking gun" everywhe
 
 <img width="650" height="362" alt="perfect-blue-sky-background--with-fluffy-clouds(1)" src="https://github.com/user-attachments/assets/8cdf8c7f-a401-4700-aba2-72e09c196379" />
 
-### Real Examples from a Real AI Slop Machine
+### Two checks for code-review prose
 
-These technical facts describe an H.264 encoder quirk. The first version scores **18.39** violations per 100 words. The second scores **0.00**.
+Slopbliterator runs locally and uses no runtime dependencies. It checks the form of technical prose and whether a PR description adds information beyond the diff.
+
+- **Form**: `slop-lint` checks sentence length, punctuation, voice, weak verbs, stock phrases, and marketing language.
+
+- **Substance**: `slop-substance` checks diff narration, repeated Result sections, reviewer instructions, missing context, and bare code symbols.
+
+The form checker began with Ege Çelebi's open-source STE linter. This repository adds the substance checker, multi-harness installation, persistent user vocabulary, and precision-focused detector tests.
+
+### A real H.264 example
+
+These technical facts describe an H.264 encoder quirk. The first version scores **20.51** violations per 100 words. The second scores **0.00**.
 
 ```diff
 - It's important to note that our H.264 encoding path leverages a rather nuanced,
@@ -28,49 +38,126 @@ These technical facts describe an H.264 encoder quirk. The first version scores 
 
 | Detected by | Found | Fixed |
 |---|---|---|
-| banned tells | `it's important to note`, `load-bearing`, `going forward`, `worth noting` | cut |
-| marketing words | `powerful`, `nuanced`, `leverages`, `fundamentally` | cut, or state the fact |
-| em dashes | two asides inside sentences | split into sentences |
-| long sentences | two run-ons, worst over 40 words | one idea per sentence |
+| banned tells | ten hits, including `load-bearing`, `going forward`, and `worth noting` | cut |
+| marketing words | `powerful` | cut, or state the fact |
+| grammar | two contractions and one passive hit | expand or name the actor |
+| long sentences | two run-ons, worst 37 words | one idea per sentence |
 
-### Install and use
+### Install
 
 The installer detects Claude Code, Codex, Gemini CLI, Cursor, Windsurf, and Copilot. It installs the PATH commands and the matching writing skill. See [INSTALL.md](INSTALL.md) for options and manual setup.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/MichelKazi/slopbliterator/main/install.sh | sh
-slop-lint < draft.txt
-slop-lint pr.md notes.md
-git diff origin/main...HEAD | slop-substance --body pr.txt --markdown
-slop-lint --add banned "at the end of the day"
 ```
 
-Target fewer than 1.5 violations per 100 words. Baseline AI writing scores about 4.4.
+### Use
 
-### How it works
+Check text from standard input or files:
 
-Slopbliterator has two checks.
+```bash
+slop-lint < draft.txt
+slop-lint pr.md notes.md
+```
 
-- **Form**: `slop-lint` checks sentence length, punctuation, voice, weak verbs, and banned terms. Fix each form flag.
+Check whether a PR description narrates its diff:
 
-- **Substance**: `slop-substance` detects PR text that repeats the diff. It reports a signal. You decide whether the text adds useful context.
+```bash
+git diff origin/main...HEAD | slop-substance --body pr.txt --markdown
+```
 
-The packaged word list stays read-only. `--add` stores personal terms in the user configuration directory.
+Add a personal term and its replacement:
+
+```bash
+slop-lint --add banned "at the end of the day" "state the fact"
+```
+
+User terms live outside the installed package, so updates do not overwrite them.
+
+### Detection quality
+
+The repository contains 95 labeled cases. Each detector gets known-slop cases that must fire and known-clean cases that must remain quiet.
+
+```bash
+python3 corpus/score.py --baseline corpus/baseline.json
+```
+
+The harness reports precision, recall, false positives, false negatives, and baseline deltas for each detector. The corpus is small, so its scores are regression evidence rather than population estimates.
+
+Precision comes first. A noisy prose checker gets muted.
+
+The Issue 9 coverage model includes all 53 numbered STE rules. The model classifies each rule as enforced, advisory, or manual. The classification prevents contextual rules from becoming noisy regex violations.
+
+```bash
+slop-lint --coverage
+slop-lint --mode procedure < steps.txt
+slop-lint --mode descriptive < reference.txt
+```
+
+The default STE-flavored mode keeps the original score contract for general coding prose. Procedure mode uses a 20-word limit. Descriptive mode uses a 25-word limit.
 
 ### Make it yours
 
-The base rules use a neutral voice. Add a `persona.md` file to restore a specific voice without weakening the rules.
+The packaged word list stays read-only. Use `--add` for personal terms and replacements.
 
-Copy a file from `personas/` or write your own. No persona means neutral STE.
+The writing skill uses a neutral voice by default. Copy a file from `personas/` to `persona.md` when documentation needs a specific voice.
 
-Use `--add` to store your own banned terms and replacements. Edit `SKILL.md` to change the writing rules.
+Edit `SKILL.md` when you want to change the writing rules themselves.
 
-### Enforce it
+### Add it to a repository
 
 `hooks/precommit-slop-check.sh` checks a commit message before it lands. The hook is optional and advisory. See `hooks/README.md`.
 
-### Limits and credit
+The linter also works in scripts and CI because `slop-lint` returns JSON for standard input. File mode prints one summary line per file.
 
-The linter fixes the form of slop. It cannot make a hollow paragraph true. Do not use it for text that needs a distinct voice.
+### Limits
 
-The STE approach and original linter come from [woosal1337's "the cure for AI slop"](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop). Slopbliterator adds substance checks, an editable word list, and personas. MIT licensed.
+The form linter cannot prove that prose is true or useful. The substance linter reports possible problems, not verdicts.
+
+Slopbliterator does not automatically enforce every ASD-STE100 rule. It does not include the copyrighted controlled dictionary. Do not use it as a certified STE checker.
+
+Do not run strict technical-writing rules over marketing copy or other text that needs a distinct voice.
+
+### Credit and license
+
+Skills that remove AI slop may now qualify as AI slop themselves. Slopbliterator did not invent this category. It is another plugin to plug in. Its useful difference is the measured, diff-aware review gate described above.
+
+The original STE skill and linter come from Ege Çelebi's MIT-licensed ["The cure for AI slop" kit](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop). Slopbliterator preserves the [upstream license](LICENSE-upstream).
+
+Related STE tools:
+
+- [ste](https://github.com/cstaszak/ste)
+
+- [claude-ste](https://github.com/thought-stuff/claude-ste)
+
+- [asd-ste100-checker](https://github.com/sourdough-bread/asd-ste100-checker)
+
+- [SimpleEnglish](https://github.com/AminBlg/SimpleEnglish)
+
+- [slop-lint](https://github.com/tylerriccio33/slop-lint)
+
+- [ste100-vale-rules](https://github.com/aldair-torres/ste100-vale-rules)
+
+Related anti-slop tools and skills:
+
+- [no-slop](https://github.com/Byk3y/no-slop)
+
+- [vale-ai-tells](https://github.com/tbhb/vale-ai-tells)
+
+- [deslop](https://github.com/adamcharnock/deslop)
+
+- [slop-cop](https://github.com/MahmoudHalat/slop-cop)
+
+- [SlopScore](https://github.com/jman4162/slopscore)
+
+- [humanize-ai-writing](https://github.com/haidrrrry/humanize-ai-writing)
+
+- [untell](https://github.com/ssamba1/untell)
+
+- [no-ai-slop](https://github.com/petergyang/no-ai-slop)
+
+- [humanizer](https://github.com/blader/humanizer)
+
+- [humanize](https://github.com/kimhons/humanize)
+
+Slopbliterator is an unofficial tool. ASD and the Simplified Technical English Maintenance Group do not endorse or certify it. The full ASD-STE100 standard remains copyrighted and is available from [asd-ste100.org](https://asd-ste100.org).

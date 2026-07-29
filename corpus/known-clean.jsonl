@@ -31,3 +31,16 @@
 {"id":"substance-direct-fact","linter":"substance","detector":"overexplanation","text":"Modification:\nThe endpoint is admin-only.","diff":""}
 {"id":"substance-acronyms","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nThe API accepts JSON and exposes a GraphQL endpoint.","diff":""}
 {"id":"substance-backticked-symbol","linter":"substance","detector":"unbackticked_symbol","text":"Modification:\nCalls `updateVisibility` after validation.","diff":""}
+{"id":"ste-american-color","linter":"ste","detector":"american_spelling(advisory)","text":"Set the display color to blue."}
+{"id":"ste-quoted-british-spelling","linter":"ste","detector":"american_spelling(advisory)","text":"The button shows \"Colour\" in the imported interface."}
+{"id":"ste-simple-has-object","linter":"ste","detector":"complex_verb(advisory)","text":"The service has three queues."}
+{"id":"ste-procedure-imperative-step","linter":"ste","detector":"non_imperative_step(advisory)","mode":"procedure","text":"1. Install the package."}
+{"id":"ste-procedure-note-information","linter":"ste","detector":"instruction_in_note(advisory)","mode":"procedure","text":"NOTE: The cover is hot after the test."}
+{"id":"ste-description-25-words","linter":"ste","detector":"long_sentence(>25w)","mode":"descriptive","text":"The parser reads each request and returns an error when the supplied account identifier does not match the authenticated user for that request each time."}
+{"id":"ste-procedure-parenthetical-count","linter":"ste","detector":"long_sentence(>20w)","mode":"procedure","text":"Install the valve (refer to the detailed installation diagram in Figure 1) before the scheduled pressure test starts and record the result."}
+{"id":"ste-procedure-unit-count","linter":"ste","detector":"long_sentence(>20w)","mode":"procedure","text":"Install the valve before the pressure reaches 10 kPa and record the result in the maintenance log for the current test."}
+{"id":"ste-code-british-spelling","linter":"ste","detector":"american_spelling(advisory)","text":"Set `display_colour` before startup."}
+{"id":"ste-simple-future-copula","linter":"ste","detector":"complex_verb(advisory)","text":"The service will be ready at noon."}
+{"id":"ste-procedure-condition-step","linter":"ste","detector":"non_imperative_step(advisory)","mode":"procedure","text":"1. If the red light comes on, stop the test."}
+{"id":"ste-procedure-note-state","linter":"ste","detector":"instruction_in_note(advisory)","mode":"procedure","text":"NOTE: Pressure can remain high after the test."}
+{"id":"ste-seven-item-list","linter":"ste","detector":"long_paragraph(>6s)","text":"- Read the file.\n- Parse the header.\n- Check the key.\n- Store the value.\n- Close the file.\n- Print the count.\n- Exit the process."}
